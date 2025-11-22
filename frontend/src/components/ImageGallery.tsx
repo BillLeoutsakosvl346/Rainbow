@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Image as ImageIcon, Upload } from "lucide-react";
+import { Image as ImageIcon, Upload, ChevronLeft, ChevronRight } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -33,6 +33,38 @@ export const ImageGallery = () => {
               <p>Upload</p>
             </TooltipContent>
           </Tooltip>
+          
+          {/* Navigation arrows */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 bg-muted hover:bg-muted/80 text-muted-foreground hover:text-muted-foreground"
+              >
+                <ChevronLeft className="h-3.5 w-3.5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Previous Scene</p>
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7 bg-muted hover:bg-muted/80 text-muted-foreground hover:text-muted-foreground"
+              >
+                <ChevronRight className="h-3.5 w-3.5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Next Scene</p>
+            </TooltipContent>
+          </Tooltip>
+          
           <ToggleGroup
             type="single"
             value={frameType}
@@ -55,7 +87,7 @@ export const ImageGallery = () => {
         </div>
       </div>
 
-      <Card className="flex-1 bg-secondary border-border rounded-xl">
+      <Card className="flex-1 bg-secondary border-border rounded-xl relative">
         <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-secondary to-panel-darker">
           <div className="text-center">
             <ImageIcon className="h-12 w-12 mx-auto text-muted-foreground" />

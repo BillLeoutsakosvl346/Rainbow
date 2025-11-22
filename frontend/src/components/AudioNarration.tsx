@@ -15,27 +15,13 @@ import { Music, Mic, Upload } from "lucide-react";
 
 export const AudioNarration = () => {
   const [audioMode, setAudioMode] = useState<"narration" | "music">("narration");
+  const [inheritEnabled, setInheritEnabled] = useState(false);
 
   return (
     <div className="h-full bg-panel-darker rainbow-border p-4 rounded-xl flex flex-col gap-3">
       <div className="flex items-center justify-between mb-1">
         <h3 className="text-sm font-semibold text-foreground">Audio & Narration</h3>
         <div className="flex items-center gap-2">
-          {audioMode === "music" && (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="h-7 w-7 p-0 bg-muted hover:bg-muted/80 text-muted-foreground hover:text-muted-foreground"
-                >
-                  <Upload className="h-3.5 w-3.5" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Upload</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
           <ToggleGroup
             type="single"
             value={audioMode}
@@ -100,7 +86,7 @@ export const AudioNarration = () => {
               </SelectContent>
             </Select>
 
-            <Button variant="secondary" size="sm" className="h-8 text-xs">
+            <Button variant="secondary" size="sm" className="h-8 text-xs bg-black text-white hover:bg-muted">
               Convert
             </Button>
           </div>
@@ -119,29 +105,73 @@ export const AudioNarration = () => {
               <Music className="h-4 w-4 text-rainbow-orange" />
               <span className="text-xs font-medium text-foreground">Background Music</span>
             </div>
-            <Select>
-              <SelectTrigger className="h-7 w-32 text-xs bg-background/50 text-foreground [&>span]:data-[placeholder]:text-muted-foreground">
-                <SelectValue placeholder="Select..." />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="epic-journey">Epic Journey</SelectItem>
-                <SelectItem value="calm-waves">Calm Waves</SelectItem>
-                <SelectItem value="digital-dream">Digital Dream</SelectItem>
-                <SelectItem value="rising-action">Rising Action</SelectItem>
-                <SelectItem value="peaceful-moments">Peaceful Moments</SelectItem>
-                <SelectItem value="upbeat-energy">Upbeat Energy</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="flex items-center gap-2">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className={`h-7 w-7 p-0 bg-black text-white hover:bg-muted hover:text-white ${
+                      inheritEnabled ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+                    disabled={inheritEnabled}
+                  >
+                    <Upload className="h-3.5 w-3.5" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Upload</p>
+                </TooltipContent>
+              </Tooltip>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="secondary" 
+                    size="sm" 
+                    onClick={() => setInheritEnabled(!inheritEnabled)}
+                    className={`h-7 text-xs border-2 ${
+                      inheritEnabled 
+                        ? 'bg-gradient-to-r from-rainbow-cyan via-rainbow-purple to-rainbow-orange text-white hover:opacity-90 border-black' 
+                        : 'bg-black text-white hover:bg-muted border-black'
+                    }`}
+                  >
+                    Inherit
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Continue previous track</p>
+                </TooltipContent>
+              </Tooltip>
+              <Select disabled={inheritEnabled}>
+                <SelectTrigger className={`h-7 w-32 text-xs bg-background/50 text-foreground [&>span]:data-[placeholder]:text-muted-foreground ${
+                  inheritEnabled ? 'opacity-50 cursor-not-allowed' : ''
+                }`}>
+                  <SelectValue placeholder="Select..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="epic-journey">Epic Journey</SelectItem>
+                  <SelectItem value="calm-waves">Calm Waves</SelectItem>
+                  <SelectItem value="digital-dream">Digital Dream</SelectItem>
+                  <SelectItem value="rising-action">Rising Action</SelectItem>
+                  <SelectItem value="peaceful-moments">Peaceful Moments</SelectItem>
+                  <SelectItem value="upbeat-energy">Upbeat Energy</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           
           <Textarea
             placeholder="Describe the background music you want..."
-            className="flex-1 resize-none text-sm bg-background/50"
+            className={`flex-1 resize-none text-sm bg-background/50 ${
+              inheritEnabled ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={inheritEnabled}
           />
           
           <div className="flex gap-2">
-            <Select defaultValue="cinematic">
-              <SelectTrigger className="h-8 text-xs flex-1 bg-background/50">
+            <Select defaultValue="cinematic" disabled={inheritEnabled}>
+              <SelectTrigger className={`h-8 text-xs flex-1 bg-background/50 ${
+                inheritEnabled ? 'opacity-50 cursor-not-allowed' : ''
+              }`}>
                 <SelectValue placeholder="Genre" />
               </SelectTrigger>
               <SelectContent>
@@ -154,7 +184,14 @@ export const AudioNarration = () => {
               </SelectContent>
             </Select>
 
-            <Button variant="secondary" size="sm" className="h-8 text-xs">
+            <Button 
+              variant="secondary" 
+              size="sm" 
+              className={`h-8 text-xs bg-black text-white hover:bg-muted ${
+                inheritEnabled ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              disabled={inheritEnabled}
+            >
               Generate
             </Button>
           </div>

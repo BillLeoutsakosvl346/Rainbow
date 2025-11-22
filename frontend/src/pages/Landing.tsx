@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Send, Plus } from "lucide-react";
+import { Send, Plus, Settings } from "lucide-react";
 
 export default function Landing() {
   const [input, setInput] = useState("");
@@ -21,6 +21,16 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-rainbow-blue/40 via-rainbow-purple/40 to-rainbow-pink/40 flex items-center justify-center p-4 animate-fade-in relative overflow-hidden">
+      {/* Settings button */}
+      <Button
+        onClick={() => navigate("/settings")}
+        variant="ghost"
+        size="icon"
+        className="absolute top-6 right-6 z-20 text-white hover:bg-white/20 transition-colors"
+      >
+        <Settings className="h-6 w-6" />
+      </Button>
+
       {/* Animated background gradient orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[
