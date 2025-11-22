@@ -17,7 +17,7 @@ const Settings = () => {
         <Button
           variant="ghost"
           size="icon"
-          onClick={() => navigate("/")}
+          onClick={() => navigate(-1)}
           className="mr-4 hover:bg-muted/50 text-muted-foreground hover:text-muted-foreground"
         >
           <ArrowLeft className="h-5 w-5" />
